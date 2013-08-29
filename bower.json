@@ -1,7 +1,0 @@
-{
-	"name" : "flashspritejs",
-	"version" : "0.9.1",
-	"dependencies" : {
-		"jquery" : "*"
-	}
-}
