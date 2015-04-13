@@ -1,21 +1,3 @@
-/**
- * @update 2013/8/29
- * */
-
- // -------------------------------------------------------------
-// ORIGINAL LICENSE
-// -------------------------------------------------------------
-/**
- * FlashSprite.js
- * --------------
- * Load and play sprite animations made by Flash CS6+
- *
- * @version 0.9.3 (2014/12/18)
- * @author mach3 <http://github.com/mach3>
- * @url http://github.com/mach3/flashspritejs
- * @require jquery.js
- */
-
 (function($){
 
 	$.extend($, {
@@ -64,12 +46,7 @@
 				if(options){
 					this.config(options);
 				}
-
-				if(options.obj){
-					this.setObj(options.obj);
-				} else {
-					this._load();
-				}
+				this._load();
 			};
 
 			/**
@@ -107,34 +84,19 @@
 				})
 				.done(function(data){
 					var img = new Image();
-						$.extend(my.vars, {
-							meta : data.meta,
-							image : my.options.src.replace(/((\?|#).+|[^\/]+)?$/, "")
-								+ data.meta.image,
-							frames : data.frames,
-							length : data.frames.length,
-							width : data.frames[0].sourceSize.w,
-							height : data.frames[0].sourceSize.h
-						});
-						img.onload = $.proxy(my._initNode, my);
-						img.src = my.vars.image;
-					});
-			};
 
-			this.setObj = function(data){
-				var img = new Image(),
-					src = my.options.src;
-				var imagePath = (src != null)? src.replace(/((\?|#).+|[^\/]+)?$/, "") : "";
-				$.extend(my.vars, {
-					meta : data.meta,
-					image : imagePath + data.meta.image,
-					frames : data.frames,
-					length : data.frames.length,
-					width : data.frames[0].sourceSize.w,
-					height : data.frames[0].sourceSize.h
+					$.extend(my.vars, {
+						meta : data.meta,
+						image : my.options.src.replace(/((\?|#).+|[^\/]+)?$/, "")
+							+ data.meta.image,
+						frames : data.frames,
+						length : data.frames.length,
+						width : data.frames[0].sourceSize.w,
+						height : data.frames[0].sourceSize.h
+					});
+					img.onload = $.proxy(my._initNode, my);
+					img.src = my.vars.image;
 				});
-				img.onload = $.proxy(my._initNode, my);
-				img.src = my.vars.image;
 			};
 
 			/**
@@ -142,11 +104,11 @@
 			 */
 			this._initNode = function(){
 				this.node.width(this.vars.width)
-					.height(this.vars.height)
-					.css({
-						"background-repeat" : "no-repeat",
-						"background-image" : "url(" + this.vars.image + ")"
-					});
+				.height(this.vars.height)
+				.css({
+					"background-repeat" : "no-repeat",
+					"background-image" : "url(" + this.vars.image + ")"
+				});
 				if(this.options.autoPlay){
 					this.play();
 				}
@@ -229,11 +191,11 @@
 				}
 				this.index = index;
 				this.node.css(
-						"background-position",
-						"-" + this.vars.frames[this.index].frame.x + "px -"
-							+ this.vars.frames[this.index].frame.y + "px"
-					)
-					.trigger(this.EVENT_ENTER_FRAME);
+					"background-position",
+					"-" + this.vars.frames[this.index].frame.x + "px -"
+						+ this.vars.frames[this.index].frame.y + "px"
+				)
+				.trigger(this.EVENT_ENTER_FRAME);
 			};
 
 			/**
